@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://gfwuci5h8c0x"]
+
+[ext_resource type="Script" uid="uid://bqi4upglh3njh" path="res://scenes/ghost.gd" id="1_vjoux"]
+[ext_resource type="Texture2D" uid="uid://bhaurj7bpbrs8" path="res://icon.svg" id="2_sl4ig"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jyhfs"]
+size = Vector2(38, 38)
+
+[node name="Ghost" type="CharacterBody2D" unique_id=1601339083]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_vjoux")
+
+[node name="Collider" type="CollisionShape2D" parent="." unique_id=1655321067]
+shape = SubResource("RectangleShape2D_jyhfs")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=619173474]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_sl4ig")
