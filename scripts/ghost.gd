@@ -1,7 +1,7 @@
 class_name Ghost
 extends CharacterBody2D
 
-@onready var speed = randf_range(20.0, 100.0)
+@onready var speed = randf_range(80.0, 200.0)
 @onready var player = Globals.player
 
 func _physics_process(delta: float) -> void:

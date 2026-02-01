@@ -58,7 +58,7 @@ emission_shape = 3
 emission_box_extents = Vector3(700, 1, 1)
 direction = Vector3(-2, 0, 0)
 gravity = Vector3(0, 3000, 0)
-scale_min = 0.19999999
+scale_max = 5.0
 scale_over_velocity_curve = SubResource("CurveXYZTexture_tipki")
 color_initial_ramp = SubResource("GradientTexture1D_ya4ey")
 alpha_curve = SubResource("CurveTexture_85g3d")
@@ -129,13 +129,8 @@ tile_set = ExtResource("1_o5qli")
 rendering_quadrant_size = 32
 physics_quadrant_size = 32
 
-[node name="Objects" type="TileMapLayer" parent="2DWorld/TileMap" unique_id=170958197]
-tile_map_data = PackedByteArray("AABhAPr/AQATAAEAAABiAPr/AQAUAAEAAABhAPn/AQAUAAAAAABiAPn/AQATAAAAAABjAPr/AQAUAAEAAABjAPn/AQATAAAAAABkAPn/AQAUAAAAAABkAPr/AQAUAAEAAABlAPn/AQATAAAAAABlAPr/AQAUAAEAAABgAPr/AQASAAEAAABgAPn/AQASAAAAAABmAPn/AQAUAAAAAABmAPr/AQATAAEAAABnAPn/AQATAAAAAABnAPr/AQATAAEAAABoAPn/AQAVAAAAAABoAPr/AQAVAAEAAAA=")
-tile_set = ExtResource("1_o5qli")
-
 [node name="Character" parent="2DWorld" unique_id=1496570152 node_paths=PackedStringArray("mouse_marker", "camera") instance=ExtResource("2_sugp2")]
-position = Vector2(2, -177)
-scale = Vector2(2, 2)
+position = Vector2(0, -150)
 foot_speed = 400.0
 jump_distance = 300.0
 jump_height = 200.0

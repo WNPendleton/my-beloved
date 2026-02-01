@@ -21,3 +21,9 @@ func spawn_ghost():
 	add_child(new_ghost)
 	var angle = randf_range(spawn_angle_range.x, spawn_angle_range.y)
 	new_ghost.global_position = Globals.player.global_position + Vector2.from_angle(angle) * 1000.00
+
+
+func remove_ghosts():
+	for child in get_children():
+		if child is Ghost:
+			child.queue_free()
