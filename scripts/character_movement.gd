@@ -1,3 +1,4 @@
+class_name Player
 extends CharacterBody2D
 
 enum control_mode {NONE, MOUSE, CONTROLLER}
@@ -21,6 +22,10 @@ const HALF_PI = PI * 0.5
 @export var head: Node2D
 @export var camera: Camera2D
 @export var sprite: AnimatedSprite2D
+@export var jump_sound: AudioStream
+@export var land_sound: AudioStream
+@export var die_sound: AudioStream
+@export var audio: PackedScene
 
 @onready var gravity = 8 * jump_height * pow(foot_speed, 2) / pow(jump_distance, 2)
 @onready var jump_velocity = -4 * jump_height * foot_speed / jump_distance
@@ -29,6 +34,7 @@ var time_off_floor = 0.0
 var time_since_jump_press = INF
 var look_angle: float = 0.0
 var dying = false
+var been_home = false
 
 func _ready() -> void:
 	Globals.player = self
@@ -36,7 +42,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	
-	if dying:
+	if dying or Globals.cutscene or Globals.end_cutscene:
 		return
 	
 	time_off_floor += delta
@@ -48,6 +54,8 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor(): 
 		vertical_velocity += gravity * delta
 	else:
+		if time_off_floor == INF:
+			do_audio(land_sound)
 		time_off_floor = 0.0
 	
 	if Input.is_action_just_pressed("jump"):
@@ -58,8 +66,10 @@ func _physics_process(delta: float) -> void:
 	
 	if time_since_jump_press <= jump_buffer_time and on_coyote_floor():
 		sprite.play("jump")
+		do_audio(jump_sound)
 		vertical_velocity = jump_velocity
 		time_since_jump_press = INF
+		time_off_floor = INF
 	
 	mouse_marker.global_position = global_position + Vector2(0, -20) + Vector2.from_angle(look_angle) * 100.0
 	
@@ -121,6 +131,12 @@ func _physics_process(delta: float) -> void:
 	mouse_marker.position.x += diff.x
 
 
+func update_head_angle(angle):
+	var flip = abs(angle) > HALF_PI
+	head.scale = Vector2(-1.0, 1.0) if flip else Vector2(1.0, 1.0)
+	head.rotation = angle + (PI if flip else 0.0)
+
+
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		my_mode = control_mode.MOUSE
@@ -134,21 +150,32 @@ func _input(event: InputEvent) -> void:
 func kill():
 	dying = true
 	head.hide()
+	do_audio(die_sound)
 	sprite.play("die")
 
 
 func respawn():
+	been_home = false
 	hide()
 	await get_tree().create_timer(1.0).timeout
 	show()
 	head.show()
 	dying = false
-	position = Vector2(0, -150)
-	get_parent().remove_ghosts()
+	position = Vector2(-180, -190)
+	camera.global_position = global_position
+	get_parent().remove_ghosts_quietly()
 
 
 func on_coyote_floor():
 	return time_off_floor <= coyote_time
+
+
+func do_audio(stream):
+	var new_audio = audio.instantiate()
+	add_sibling(new_audio)
+	new_audio.global_position = global_position
+	new_audio.stream = stream
+	new_audio.play()
 
 
 func _on_beak_body_entered(body: Node2D) -> void:
@@ -169,3 +196,7 @@ func _on_kill_body_entered(body: Node2D) -> void:
 func _on_body_sprite_animation_finished() -> void:
 	if sprite.animation == "die":
 		respawn()
+
+
+func set_animation(name):
+	sprite.play(name)

@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://cud5w82rhifnn"]
+
+[ext_resource type="Texture2D" uid="uid://fyeljyv7hlem" path="res://sprites/plasm.png" id="1_sdd2o"]
+[ext_resource type="Script" uid="uid://ddrox3moeqmy1" path="res://scripts/one_shot_particles.gd" id="2_rpgw5"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_60rsg"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 10.0
+initial_velocity_max = 75.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.099999994
+scale_max = 0.59999996
+
+[node name="GPUParticles2D" type="GPUParticles2D" unique_id=1223506386]
+emitting = false
+amount = 100
+texture = ExtResource("1_sdd2o")
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_60rsg")
+script = ExtResource("2_rpgw5")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

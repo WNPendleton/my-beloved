@@ -1,0 +1,35 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://crsv6f85jaldt"]
+
+[ext_resource type="Texture2D" uid="uid://b87ivqq7ob3aw" path="res://sprites/hosa.png" id="1_sb4xd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sl4ig"]
+atlas = ExtResource("1_sb4xd")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jesoi"]
+atlas = ExtResource("1_sb4xd")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wlc1u"]
+atlas = ExtResource("1_sb4xd")
+region = Rect2(64, 32, 32, 32)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sl4ig")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jesoi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wlc1u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jesoi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]

@@ -1,19 +1,43 @@
 [gd_scene format=3 uid="uid://gfwuci5h8c0x"]
 
 [ext_resource type="Script" uid="uid://bqi4upglh3njh" path="res://scripts/ghost.gd" id="1_vjoux"]
-[ext_resource type="Texture2D" uid="uid://bhaurj7bpbrs8" path="res://icon.svg" id="2_sl4ig"]
+[ext_resource type="PackedScene" uid="uid://cud5w82rhifnn" path="res://prefabs/one_shot_particles.tscn" id="3_sl4ig"]
+[ext_resource type="PackedScene" uid="uid://cyro600o68ace" path="res://prefabs/one_shot_audio.tscn" id="4_jesoi"]
+[ext_resource type="AudioStream" uid="uid://dtbnfwr8qtu45" path="res://audio/sfx/ghost_pop.wav" id="4_wlc1u"]
+[ext_resource type="SpriteFrames" uid="uid://crsv6f85jaldt" path="res://sprites/ghostframes.tres" id="5_wlc1u"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_jyhfs"]
-size = Vector2(38, 38)
+[sub_resource type="CircleShape2D" id="CircleShape2D_vjoux"]
+radius = 37.61981
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sl4ig"]
+radius = 24.020824
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jesoi"]
+radius = 18.027756
 
 [node name="Ghost" type="CharacterBody2D" unique_id=1601339083]
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_vjoux")
+particles = ExtResource("3_sl4ig")
+audio = ExtResource("4_jesoi")
+death_sound = ExtResource("4_wlc1u")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=966677564]
+modulate = Color(0, 0.7542448, 0.7542447, 1)
+self_modulate = Color(1, 1, 1, 0.48235294)
+scale = Vector2(4, 4)
+sprite_frames = ExtResource("5_wlc1u")
+frame_progress = 0.81988806
 
 [node name="Collider" type="CollisionShape2D" parent="." unique_id=1655321067]
-shape = SubResource("RectangleShape2D_jyhfs")
+position = Vector2(11, 20)
+shape = SubResource("CircleShape2D_vjoux")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=619173474]
-scale = Vector2(0.3, 0.3)
-texture = ExtResource("2_sl4ig")
+[node name="Collider2" type="CollisionShape2D" parent="." unique_id=689993956]
+position = Vector2(10, -10)
+shape = SubResource("CircleShape2D_sl4ig")
+
+[node name="Collider3" type="CollisionShape2D" parent="." unique_id=1092928977]
+position = Vector2(-33, 38)
+shape = SubResource("CircleShape2D_jesoi")
